@@ -1,0 +1,44 @@
+<?php
+
+function user_scheme_schema() {
+ $scheme = array();
+ $schema['user_scheme'] = array(
+ 	'fields' => array(
+
+ 		'user_id' => array(
+ 			'description' => 'user id',
+      'type' => 'serial',
+ 			'unsigned' => TRUE,
+ 			'not null' => TRUE),
+    'ip' => array(
+       'description' => 'The IP of the user',
+       'type' => 'varchar',
+       'length' => 255,
+       'not null' => TRUE,
+       'default' => ''),
+
+    'url' => array(
+        'description' => 'user url',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => ''),
+
+    'browser' => array(
+            'description' => 'user browser',
+            'type' => 'varchar',
+            'length' => 255,
+            'not null' => TRUE,
+            'default' => ''),
+
+    'timestamp' => array(
+             'description' => 'A Unix timestamp indicating when this site link was created.',
+             'type' => 'int',
+             'not null' => TRUE,
+             'default' => 0),
+ 	),
+
+  'primary key' => array('user_id'),
+  );
+  return $schema;
+}

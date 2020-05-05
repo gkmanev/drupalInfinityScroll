@@ -1,0 +1,4 @@
+name = user_scheme
+description = site visitors data
+project = Custom
+core = 7.x

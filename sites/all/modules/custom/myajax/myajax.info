@@ -1,0 +1,4 @@
+name = myajax
+description = Ajax infinity scroll custom module.
+project = Custom
+core = 7.x

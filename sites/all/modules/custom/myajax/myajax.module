@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+	function myajax_menu() {
+
+ 
+	$items['ajax/scroll'] = array(
+    'title' => 'Visitors data',
+    'page callback' => 'myajax_get_data',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+	);
+
+	return $items;
+	}
+
+
+	function myajax_get_data() {
+
+	$pageno = $_POST['pageno'];
+	//var_dump($_POST);
+
+
+	$no_of_records_per_page = 1;
+	$offset = ($pageno-1) * $no_of_records_per_page;
+
+	$query = db_select('field_data_body', 'b');
+	$query->join('infinity_scheme', 'i', 'i.nid = b.entity_id');
+	$result = $query->fields('b', array('body_value'))
+                       ->fields('i', array('title','fe_id','nid'))
+                       //->where('n.nid = type.entity_id')
+                       //->orderBy('changed', 'DESC')
+                       ->range($offset, $no_of_records_per_page)
+                       ->execute()
+                       ->fetchAll();
+                    //   var_dump($result);
+
+
+		foreach ($result as $record) { 
+		//var_dump($record->body_value);
+
+		echo '<h1 class="article-title" >' . $record->title .'</h1>';
+		echo  '<div class= "article-body">' . $record->body_value . '</div>';
+		echo "<a class='button btn' href='node/".$record->nid."'>Read More</a>";
+
+
+		} 
+
+	/* Get user data and insert it in user_scheme table */
+
+	$ip = $_SERVER['REMOTE_ADDR'];
+	$url = "$_SERVER[HTTP_REFERER]";
+	$browser = $_SERVER['HTTP_USER_AGENT'];
+	$date = $_SERVER['REQUEST_TIME'];
+
+
+	$query = db_insert('user_scheme')
+      ->fields(array(
+          'ip' => $ip,
+          'url' =>$url,
+         'browser' =>$browser,
+         'timestamp' => $date
+           
+  ))
+  ->execute();
+
+
+	}

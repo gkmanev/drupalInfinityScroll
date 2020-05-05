@@ -1,0 +1,19 @@
+<?php
+
+
+function infinity_scheme_node_insert($node) {
+  // Grab the info from $node and insert into your tables here...
+
+
+
+    if($node->type=='infinity'){
+
+  db_insert('infinity_scheme')->fields(array(
+
+    'nid' => $node->nid,
+    'title' => $node->title,
+  ))->execute();
+
+}
+
+}

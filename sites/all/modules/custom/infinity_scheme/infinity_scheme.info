@@ -1,0 +1,4 @@
+name = infinity_scheme
+description = Table for infinity content type.
+project = Custom
+core = 7.x
